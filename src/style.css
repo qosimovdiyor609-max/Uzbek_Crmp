@@ -1,0 +1,17 @@
+* { box-sizing: border-box; }
+html, body, #game { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111; }
+canvas { display: block; }
+#hud { position: fixed; inset: 0; pointer-events: none; color: #fff; }
+.brand { position: absolute; top: 18px; left: 18px; padding: 10px 14px; border-radius: 12px; background: rgba(10, 18, 25, .78); backdrop-filter: blur(8px); font-weight: 800; letter-spacing: .5px; }
+.stats { position: absolute; top: 18px; right: 18px; display: flex; gap: 10px; }
+.stats span { padding: 10px 13px; border-radius: 12px; background: rgba(10, 18, 25, .78); }
+.hint { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); padding: 9px 13px; border-radius: 10px; background: rgba(10, 18, 25, .72); font-size: 13px; }
+#message { position: absolute; top: 76px; left: 50%; transform: translateX(-50%); padding: 10px 16px; border-radius: 12px; background: rgba(0,0,0,.72); font-weight: 700; }
+#menu { position: fixed; inset: 0; display: grid; place-items: center; background: linear-gradient(rgba(7,18,28,.35), rgba(7,18,28,.72)); }
+#menu.hidden { display: none; }
+.panel { width: min(92vw, 460px); padding: 34px; border-radius: 22px; text-align: center; color: #fff; background: rgba(9, 17, 25, .9); box-shadow: 0 24px 80px rgba(0,0,0,.35); }
+.panel h1 { margin: 0 0 8px; font-size: 38px; }
+.panel p { opacity: .78; }
+button { margin-top: 16px; border: 0; border-radius: 12px; padding: 13px 22px; font-size: 16px; font-weight: 800; cursor: pointer; }
+button:hover { transform: translateY(-1px); }
