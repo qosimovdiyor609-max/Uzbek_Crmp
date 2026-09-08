@@ -48,8 +48,7 @@ function road(x: number, z: number, w: number, d: number) {
   box(x, 0.03, z, w, 0.08, d, 0x34373a);
 }
 
-// O'zbekiston shahri: dastlabki prototip xarita.
-// Keyingi bosqichlarda tumanlar, mahallalar va aniqroq ko'cha tarmog'i qo'shiladi.
+// O'zbekiston ruhidagi original shahar xaritasi.
 road(0, 0, 280, 10);
 road(0, 0, 10, 280);
 road(-65, -45, 120, 8);
@@ -60,13 +59,13 @@ road(70, -55, 8, 120);
 for (let x = -120; x <= 120; x += 24) {
   for (let z = -120; z <= 120; z += 24) {
     if (Math.abs(x) < 18 || Math.abs(z) < 18) continue;
-    const h = 5 + ((Math.abs(x * 7 + z * 3) % 13));
+    const h = 5 + (Math.abs(x * 7 + z * 3) % 13);
     const colors = [0xd6b48a, 0xc7d3d8, 0xe0c28f, 0xb9c6b0];
     box(x, h / 2, z, 13, h, 13, colors[Math.abs(x + z) % colors.length]);
   }
 }
 
-// Markaziy maydon va shahar belgisi.
+// Markaziy maydon va O'zbekiston ranglaridagi shahar belgisi.
 box(0, 0.12, 0, 34, 0.2, 34, 0xb8b39a);
 box(0, 3, 0, 3, 6, 3, 0xffffff);
 box(0, 6.8, 0, 8, 0.15, 5, 0x1f9d55);
@@ -78,12 +77,11 @@ for (let i = 0; i < 70; i++) {
   const x = ((i * 37) % 250) - 125;
   const z = ((i * 61) % 250) - 125;
   if (Math.abs(x) < 14 || Math.abs(z) < 14) continue;
-  const trunk = box(x, 1.3, z, 0.7, 2.6, 0.7, 0x6b4326);
+  box(x, 1.3, z, 0.7, 2.6, 0.7, 0x6b4326);
   const crown = new THREE.Mesh(new THREE.SphereGeometry(2.2, 10, 8), new THREE.MeshStandardMaterial({ color: 0x287a3f }));
   crown.position.set(x, 3.4, z);
   crown.castShadow = true;
   scene.add(crown);
-  void trunk;
 }
 
 // O'yinchi.
@@ -101,7 +99,6 @@ scene.add(player);
 
 // Oddiy mashina prototipi.
 const car = new THREE.Group();
-box(0, 0, 0, 4, 1, 7, 0xc73535).parent?.remove; // no-op to keep helper local
 const carBody = new THREE.Mesh(new THREE.BoxGeometry(4, 1, 7), new THREE.MeshStandardMaterial({ color: 0xc73535 }));
 carBody.position.y = 1;
 car.add(carBody);
@@ -115,13 +112,18 @@ for (const x of [-1.9, 1.9]) for (const z of [-2.3, 2.3]) {
   car.add(wheel);
 }
 car.position.set(7, 0, 12);
-car.traverse(o => { if (o instanceof THREE.Mesh) { o.castShadow = true; } });
+car.traverse(o => { if (o instanceof THREE.Mesh) o.castShadow = true; });
 scene.add(car);
 
 const keys = new Set<string>();
 let driving = false;
-let cash = 5000;
-addEventListener('keydown', e => { keys.add(e.key.toLowerCase()); if (e.key.toLowerCase() === 'e') toggleCar(); });
+const cash = 5000;
+
+addEventListener('keydown', e => {
+  const key = e.key.toLowerCase();
+  keys.add(key);
+  if (key === 'e') toggleCar();
+});
 addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 
 function toggleCar() {
